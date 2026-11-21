@@ -8,12 +8,12 @@ export const metadata: Metadata = {
 
 function Section({ number, title, children }: { number: string; title: string; children: React.ReactNode }) {
   return (
-    <section className="border-t border-[#edf1ed] py-8 first:border-0 first:pt-0">
+    <section className="border-t border-[#3A383E] py-8 first:border-0 first:pt-0">
       <div className="grid gap-3 sm:grid-cols-[56px_minmax(0,1fr)]">
-        <span className="text-sm font-bold text-[#91a098]">{number}</span>
+        <span className="text-sm font-bold text-[#81D4FA]">{number}</span>
         <div>
-          <h2 className="mb-4 text-xl font-semibold tracking-tight text-[#24473e] sm:text-2xl">{title}</h2>
-          <div className="space-y-4 text-[15px] leading-7 text-[#596964]">{children}</div>
+          <h2 className="mb-4 text-xl font-semibold tracking-tight text-[#E6E1E5] sm:text-2xl">{title}</h2>
+          <div className="space-y-4 text-[15px] leading-7 text-[#C7C1C8]">{children}</div>
         </div>
       </div>
     </section>
@@ -136,7 +136,7 @@ export default function PrivacyPolicyPage() {
         </p>
       </Section>
 
-      <div className="mt-2 rounded-2xl border border-[#f0ddd7] bg-[#fff8f5] px-5 py-4 text-sm leading-6 text-[#785a50]">
+      <div className="mt-2 rounded-2xl border border-[#004D68] bg-[#003549] px-5 py-4 text-sm leading-6 text-[#BFE9FF]">
         <strong>Crisis support:</strong> if you may hurt yourself or someone else, or are in immediate danger, contact local emergency services now. In the U.S. or Canada, call or text 988; elsewhere, use a local crisis service.
       </div>
     </LegalShell>
