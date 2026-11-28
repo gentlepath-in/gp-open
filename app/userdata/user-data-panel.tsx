@@ -29,7 +29,7 @@ export function UserDataPanel() {
     widgetIdRef.current = window.turnstile?.render(widgetRef.current, {
       sitekey: siteKey,
       action: "privacy_request",
-      appearance: "interaction-only",
+      appearance: "always",
       callback: (token: string) => setCaptchaToken(token),
       "expired-callback": () => setCaptchaToken(""),
       "error-callback": () => setCaptchaToken(""),
