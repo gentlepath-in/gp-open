@@ -4,16 +4,16 @@ import { UserDataPanel } from "./user-data-panel";
 
 export const metadata: Metadata = {
   title: "Your Data | GentlePath",
-  description: "Review and delete your saved GentlePath demo profile data.",
+  description: "Request deletion of server-side data.",
 };
 
 export default function UserDataPage() {
   return (
     <LegalShell
       eyebrow="Data controls"
-      title="See what is saved. Choose what stays."
-      description="This demo begins with sample wellness data stored only in your browser. You can review it and permanently remove it below."
-      updated="November 21, 2026"
+      title="Manage your data"
+      description="Submit an access, correction, or deletion request for data held by GentlePath."
+      updated="November 28, 2026"
       activeHref="/userdata"
     >
       <UserDataPanel />
