@@ -104,10 +104,10 @@ export async function POST(request: Request) {
   }
 
   const supabaseUrl =
-    process.env.SUPABASE_URL
+    process.env.GP_SUPABASE_URL
     || process.env.SUPABASE_PROJECT_URL
-    || process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    || process.env.NEXT_PUBLIC_GP_SUPABASE_URL;
+  const serviceRoleKey = process.env.GP_SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceRoleKey) {
     return Response.json({ error: "The privacy request database is not configured." }, { status: 503 });
