@@ -29,6 +29,7 @@ export function UserDataPanel() {
     widgetIdRef.current = window.turnstile?.render(widgetRef.current, {
       sitekey: siteKey,
       action: "privacy_request",
+      appearance: "interaction-only",
       callback: (token: string) => setCaptchaToken(token),
       "expired-callback": () => setCaptchaToken(""),
       "error-callback": () => setCaptchaToken(""),
@@ -36,15 +37,24 @@ export function UserDataPanel() {
     });
   }, [captchaReady, siteKey]);
 
+  function resetTurnstile() {
+    const widgetId = widgetIdRef.current;
+    if (widgetId && typeof window.turnstile?.reset === "function") {
+      window.turnstile.reset(widgetId);
+    }
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
+
     if (!captchaToken) {
       setSubmitStatus("error");
       setSubmitMessage("Please complete the security check.");
       return;
     }
 
-    const form = new FormData(event.currentTarget);
+    const form = new FormData(formElement);
     const payload = {
       name: String(form.get("name") ?? "").trim(),
       email: String(form.get("email") ?? "").trim(),
@@ -65,17 +75,19 @@ export function UserDataPanel() {
       const result = await response.json();
 
       if (!response.ok) {
+        if (response.status === 403 || response.status === 500) {
+          setCaptchaToken("");
+          resetTurnstile();
+        }
         throw new Error(result.error || "Your request could not be submitted.");
       }
 
-      event.currentTarget.reset();
+      formElement.reset();
       setCaptchaToken("");
-      window.turnstile?.reset(widgetIdRef.current);
+      resetTurnstile();
       setSubmitStatus("success");
       setSubmitMessage("Your request has been submitted. We will verify your identity before processing it.");
     } catch (error) {
-      setCaptchaToken("");
-      window.turnstile?.reset(widgetIdRef.current);
       setSubmitStatus("error");
       setSubmitMessage(error instanceof Error ? error.message : "Your request could not be submitted.");
     }
@@ -85,7 +97,9 @@ export function UserDataPanel() {
     <div className="space-y-10">
       {siteKey ? (
         <Script
+          id="turnstile-script"
           src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          strategy="afterInteractive"
           onLoad={() => setCaptchaReady(true)}
           onError={() => {
             setCaptchaReady(false);
